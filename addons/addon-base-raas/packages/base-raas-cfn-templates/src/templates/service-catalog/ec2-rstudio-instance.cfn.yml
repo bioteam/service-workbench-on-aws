@@ -16,6 +16,9 @@ Parameters:
   KeyName:
     Type: String
     Description: Keypair name for SSH access
+  DnsName:
+    Type: String
+    Description: Public-facing DNS name for HTTPS certificate
   AccessFromCIDRBlock:
     Type: String
     Description: The CIDR used to access the ec2 instances.
@@ -179,6 +182,7 @@ Resources:
           # Download and execute bootstrap script
           aws s3 cp "${EnvironmentInstanceFiles}/get_bootstrap.sh" "/tmp"
           chmod 500 "/tmp/get_bootstrap.sh"
+          echo "${DnsName}" > /etc/public-hostname
           /tmp/get_bootstrap.sh "${EnvironmentInstanceFiles}" '${S3Mounts}'
 
           # Signal result to CloudFormation

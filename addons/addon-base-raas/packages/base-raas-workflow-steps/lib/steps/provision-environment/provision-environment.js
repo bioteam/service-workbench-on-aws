@@ -38,12 +38,14 @@ class ProvisionEnvironment extends StepBase {
       cfnTemplateService,
       environmentKeypairService,
       environmentMountService,
+      environmentDnsService,
     ] = await this.mustFindServices([
       'userService',
       'environmentService',
       'cfnTemplateService',
       'environmentKeypairService',
       'environmentMountService',
+      'environmentDnsService',
     ]);
 
     // Get common payload params and pull environment info
@@ -74,6 +76,8 @@ class ProvisionEnvironment extends StepBase {
     switch (type) {
       case 'ec2-rstudio':
         template = await cfnTemplateService.getTemplate('ec2-rstudio-instance');
+
+        addParam('DnsName', environmentDnsService.getHostname('rstudio', environmentId);
         break;
       case 'ec2-linux':
         template = await cfnTemplateService.getTemplate('ec2-linux-instance');
