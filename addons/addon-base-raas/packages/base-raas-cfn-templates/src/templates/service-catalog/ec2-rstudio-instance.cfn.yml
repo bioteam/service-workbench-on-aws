@@ -93,6 +93,17 @@ Resources:
                   - 'ssm:GetParameter'
                   - 'ssm:PutParameter'
                 Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/*'
+        - PolicyName: route53-access-for-certbot
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - 'route53:GetChange'
+                  - 'route53:ListHostedZones'
+                  - 'route53:ListResourceRecordSets'
+                  - 'route53:ChangeResourceRecordSets'
+                Resource: '*'
 
   InstanceProfile:
     Type: 'AWS::IAM::InstanceProfile'

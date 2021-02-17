@@ -8,9 +8,6 @@
 # CFN stack has been completed created.
 S3_MOUNTS="$1"
 
-# Exit if no S3 mounts were specified
-[ -z "$S3_MOUNTS" -o "$S3_MOUNTS" = "[]" ] && exit 0
-
 # Get directory in which this script is stored and define URL from which to download goofys
 FILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 GOOFYS_URL="https://github.com/kahing/goofys/releases/download/v0.21.0/goofys"
@@ -68,6 +65,13 @@ update_jupyter_config() {
     c.NotebookApp.session_manager_class = SessionManager
 EOF
 }
+
+if [ $(env_type) = "rstudio" ]; then
+    bash "${FILES_DIR}/bin/certbot.sh"
+fi
+
+# Exit if no S3 mounts were specified
+[ -z "$S3_MOUNTS" -o "$S3_MOUNTS" = "[]" ] && exit 0
 
 # Install dependencies
 yum install -y fuse jq
