@@ -77,7 +77,7 @@ class ProvisionEnvironment extends StepBase {
       case 'ec2-rstudio':
         template = await cfnTemplateService.getTemplate('ec2-rstudio-instance');
 
-        addParam('DnsName', environmentDnsService.getHostname('rstudio', environmentId);
+        addParam('DnsName', environmentDnsService.getHostname('rstudio', environmentId));
         break;
       case 'ec2-linux':
         template = await cfnTemplateService.getTemplate('ec2-linux-instance');
